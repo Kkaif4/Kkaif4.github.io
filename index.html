@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mohammad Kaif Shaikh | Backend Engineer</title>
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --surface-color: #131c2e;
+            --surface-hover: #1c2842;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --accent-color: #0ea5e9;
+            --accent-glow: rgba(14, 165, 233, 0.15);
+            --border-color: #1e293b;
+            --max-width: 900px;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 35px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 0 0 10px 0;
+            letter-spacing: -0.025em;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: var(--accent-color);
+            font-weight: 500;
+            margin: 0 0 15px 0;
+        }
+
+        .tagline {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            max-width: 700px;
+            margin: 0;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-top: 45px;
+            margin-bottom: 25px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-top: 0;
+            margin-bottom: 12px;
+        }
+
+        /* Lists */
+        ul {
+            padding-left: 20px;
+            margin: 0 0 25px 0;
+        }
+
+        li {
+            margin-bottom: 12px;
+            color: var(--text-muted);
+        }
+
+        li strong {
+            color: var(--text-main);
+            font-weight: 500;
+        }
+
+        /* Tech Stack Cards Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .skill-card {
+            background-color: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent-color);
+            box-shadow: 0 4px 20px var(--accent-glow);
+        }
+
+        .skill-tags {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag {
+            background: rgba(30, 41, 59, 0.5);
+            padding: 4px 8px;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+            font-size: 0.85rem;
+        }
+
+        /* Live Metrics Visuals */
+        .stats-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .stats-img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: var(--surface-color);
+        }
+
+        /* Interactive Elements */
+        .links-list {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+        }
+
+        a {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        a:hover {
+            color: var(--text-main);
+            text-decoration: underline;
+        }
+
+        blockquote {
+            margin: 60px 0 20px 0;
+            padding-left: 20px;
+            border-left: 3px solid var(--accent-color);
+            font-style: italic;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 25px 15px;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+            .links-list {
+                flex-direction: column;
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Mohammad Kaif Shaikh</h1>
+            <div class="subtitle">Backend Developer | Full Stack Engineer</div>
+            <p class="tagline">Building scalable backend systems, APIs, and enterprise applications with a strong focus on architecture performance and structured data workflows.</p>
+        </header>
+
+        <main>
+            <section id="about">
+                <h2>About Me</h2>
+                <ul>
+                    <li><strong>Architecture:</strong> Backend-oriented developer experienced in structuring enterprise, production-ready web application servers.</li>
+                    <li><strong>Problem Solving:</strong> Focused on translating strict business logic requirements into performant, clean code.</li>
+                    <li><strong>Core Direction:</strong> Deepening technical capabilities within distributed systems, infrastructure engineering, and database scaling.</li>
+                    <li><strong>Location:</strong> India</li>
+                </ul>
+            </section>
+
+            <section id="tech-stack">
+                <h2>Technical Skills</h2>
+                <div class="skills-grid">
+                    <div class="skill-card">
+                        <h3>Backend Architecture</h3>
+                        <div class="skill-tags">
+                            <span class="tag">Node.js</span>
+                            <span class="tag">TypeScript</span>
+                            <span class="tag">NestJS</span>
+                            <span class="tag">Express.js</span>
+                            <span class="tag">REST APIs</span>
+                            <span class="tag">WebSockets</span>
+                        </div>
+                    </div>
+                    <div class="skill-card">
+                        <h3>Databases & Layers</h3>
+                        <div class="skill-tags">
+                            <span class="tag">PostgreSQL</span>
+                            <span class="tag">MongoDB</span>
+                            <span class="tag">MySQL</span>
+                            <span class="tag">Prisma ORM</span>
+                            <span class="tag">Redis</span>
+                        </div>
+                    </div>
+                    <div class="skill-card">
+                        <h3>Frontend Integration</h3>
+                        <div class="skill-tags">
+                            <span class="tag">React.js</span>
+                            <span class="tag">Next.js</span>
+                            <span class="tag">Angular</span>
+                            <span class="tag">Tailwind CSS</span>
+                        </div>
+                    </div>
+                    <div class="skill-card">
+                        <h3>Infrastructure</h3>
+                        <div class="skill-tags">
+                            <span class="tag">Docker</span>
+                            <span class="tag">Git / GitHub</span>
+                            <span class="tag">GitHub Actions</span>
+                            <span class="tag">Linux Environments</span>
+                            <span class="tag">AWS (Basics)</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="implementations">
+                <h2>Functional Competencies</h2>
+                <ul>
+                    <li><strong>Enterprise Domain:</strong> Designed functional modules for modern ERP systems, internal transaction management, and asset tracking.</li>
+                    <li><strong>Data Streams:</strong> Handled complex business requirements covering real-time application events via WebSockets alongside automated scheduled workflows.</li>
+                    <li><strong>Security & Control:</strong> Structured granular enterprise security, utilizing JSON Web Tokens (JWT) and Role-Based Access Control (RBAC) matrices.</li>
+                </ul>
+            </section>
+
+            <section id="learning-objectives">
+                <h2>Technical Focus Area</h2>
+                <ul>
+                    <li><strong>Active Engineering Track:</strong> Low-level Node.js architecture execution parameters, asynchronous performance scaling, and message-brokered operations (Kafka/RabbitMQ).</li>
+                    <li><strong>Long-term Architecture:</strong> Distributed environment design metrics, scalable microservices orchestration with Kubernetes, and high-availability database setups.</li>
+                </ul>
+            </section>
+
+            <section id="metrics">
+                <h2>GitHub Performance Overview</h2>
+                <div class="stats-container">
+                    <div class="stats-row">
+                        <img class="stats-img" src="https://github-readme-stats.vercel.app/api?username=Kkaif4&show_icons=true&theme=github_dark" alt="GitHub Statistics Summary" />
+                        <img class="stats-img" src="https://github-readme-streak-stats.herokuapp.com/?user=Kkaif4&theme=github-dark" alt="GitHub Activity Streaks" />
+                    </div>
+                    <div class="stats-row">
+                        <img class="stats-img" src="https://github-readme-stats.vercel.app/api/top-langs/?username=Kkaif4&layout=compact&theme=github_dark" alt="Primary Language Allocation Profiles" />
+                    </div>
+                </div>
+            </section>
+
+            <section id="contact">
+                <h2>Contact & Profiles</h2>
+                <ul class="links-list">
+                    <li><strong>Portfolio:</strong> <a href="https://kkaif4.github.io">kkaif4.github.io</a></li>
+                    <li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/mdkaifshaikh" target="_blank" rel="noopener">Professional Network Profile</a></li>
+                    <li><strong>Email:</strong> <a href="mailto:kkaifshaikh.27@gamil.com">kkaifshaikh.27@gamil.com</a></li>
+                </ul>
+            </section>
+        </main>
+
+        <footer>
+            <blockquote>"Clean code, scalable systems, and continuous learning."</blockquote>
+        </footer>
+    </div>
+
+</body>
+</html>
