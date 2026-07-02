@@ -1,342 +1,614 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>kkaif4@backend-core:~</title>
+  <title>Kaif — Backend Engineer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-color: #090c10;
-      --term-bg: #0d1117;
-      --term-nav: #161b22;
-      --border-color: #30363d;
-      --text-main: #c9d1d9;
-      --text-muted: #8b949e;
-      --prompt-user: #58a6ff;
-      --prompt-host: #7ee787;
-      --accent-keyword: #ff7b72;
-      --accent-value: #a5d6ff;
-      --max-width: 950px;
+      --bg: #FAFAF8;
+      --ink: #1C1F26;
+      --ink-soft: #5B6270;
+      --accent: #2B6E63;
+      --accent-tint: #EDF2F0;
+      --line: #E3E5E0;
+      --gutter: #B7BCC2;
+      --mono: 'IBM Plex Mono', ui-monospace, monospace;
+      --sans: 'IBM Plex Sans', -apple-system, sans-serif;
+      --col-max: 720px;
+      --gutter-w: 44px;
+      --card-bg: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
-      font-family: 'JetBrains Mono', monospace;
-      background-color: var(--bg-color);
-      color: var(--text-main);
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 16px;
       line-height: 1.6;
-      margin: 0;
-      padding: 40px 20px;
+      -webkit-font-smoothing: antialiased;
     }
 
-    .terminal-window {
-      max-width: var(--max-width);
+    a {
+      color: inherit;
+    }
+
+    ::selection {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .page {
+      max-width: calc(var(--col-max) + var(--gutter-w));
       margin: 0 auto;
-      background-color: var(--term-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
-      overflow: hidden;
+      padding: 0 24px;
     }
 
-    .terminal-header {
-      background-color: var(--term-nav);
-      border-bottom: 1px solid var(--border-color);
-      padding: 12px 16px;
-      display: flex;
-      align-items: center;
-      position: relative;
+    /* Section structure with line-number gutter */
+    .section {
+      display: grid;
+      grid-template-columns: var(--gutter-w) 1fr;
+      padding: 64px 0 8px;
+      border-top: 1px solid var(--line);
     }
 
-    .window-buttons {
-      display: flex;
-      gap: 8px;
+    .section:first-of-type {
+      border-top: none;
     }
 
-    .dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-    }
-    .dot-close { background-color: #f85149; }
-    .dot-minimize { background-color: #f0883e; }
-    .dot-maximize { background-color: #56d364; }
-
-    .window-title {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      font-weight: 500;
+    .section .ln {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--gutter);
+      padding-top: 4px;
+      user-select: none;
     }
 
-    .terminal-body {
-      padding: 24px 32px;
+    .comment {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--accent);
+      margin: 0 0 18px;
     }
 
-    /* Core Terminal Prompt Layout */
+    .comment::before {
+      content: "// ";
+      color: var(--gutter);
+    }
+
+    /* Hero Layout */
+    .hero {
+      padding-top: 40px;
+    }
+
+    .hero .ln {
+      padding-top: 12px;
+    }
+
     .prompt {
-      margin-bottom: 24px;
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--ink-soft);
+      margin: 0 0 20px;
     }
 
-    .prompt-line::before {
-      content: "kkaif4@backend-core:~$ ";
-      color: var(--prompt-host);
-      font-weight: bold;
-    }
-    
-    .prompt-input {
-      color: var(--text-main);
-    }
-
-    h1, h2, h3 {
-      margin: 0;
-      font-weight: 700;
+    .prompt::before {
+      content: "$ ";
+      color: var(--accent);
     }
 
     h1 {
-      font-size: 1.8rem;
-      color: #fff;
-      margin-bottom: 6px;
+      font-family: var(--mono);
+      font-size: clamp(28px, 4.4vw, 40px);
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      margin: 0 0 6px;
     }
 
-    .subtitle {
-      color: var(--accent-value);
-      font-size: 1.05rem;
-      margin-bottom: 12px;
+    .role {
+      font-size: 17px;
+      color: var(--ink-soft);
+      margin: 0 0 22px;
     }
 
-    .tagline {
-      color: var(--text-muted);
-      margin-bottom: 0;
+    .role .divider {
+      color: var(--gutter);
+      margin: 0 8px;
     }
 
-    /* Sections / System Containers */
-    .system-block {
-      margin-top: 40px;
-      border-left: 2px dashed var(--border-color);
-      padding-left: 20px;
+    .bio {
+      max-width: 56ch;
+      font-size: 16px;
+      color: var(--ink);
+      margin: 0 0 28px;
     }
 
-    .system-block h2 {
-      font-size: 1.2rem;
-      color: var(--prompt-user);
-      margin-bottom: 16px;
+    .links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 18px;
+      font-family: var(--mono);
+      font-size: 13px;
     }
 
-    /* Key-Value styling for terminal vibe */
-    .env-list {
-      list-style: none;
-      padding: 0;
+    .links a {
+      text-decoration: none;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 2px;
+      transition: border-color .15s ease, color .15s ease;
+    }
+
+    .links a:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    h2 {
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      margin: 0 0 28px;
+    }
+
+    /* Experience blocks */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 36px;
+    }
+
+    .role-item {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 20px;
+    }
+
+    .role-item time {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--ink-soft);
+      padding-top: 3px;
+    }
+
+    .role-item h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 0 0 2px;
+    }
+
+    .role-item .org {
+      font-size: 13px;
+      color: var(--accent);
+      font-family: var(--mono);
+      margin-bottom: 10px;
+    }
+
+    .role-item p {
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 14.5px;
+    }
+
+    /* Projects Container */
+    .projects {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .project {
+      border: 1px solid var(--line);
+      padding: 22px 24px;
+      background: var(--card-bg);
+    }
+
+    .project-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+
+    .project h3 {
+      font-size: 16px;
+      font-weight: 600;
       margin: 0;
     }
 
-    .env-list li {
+    .project .stack {
+      font-family: var(--mono);
+      font-size: 11.5px;
+      color: var(--accent);
+    }
+
+    .project p {
+      margin: 0 0 12px;
+      color: var(--ink-soft);
+      font-size: 14.5px;
+    }
+
+    .project ul {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--ink-soft);
+      font-size: 14px;
+    }
+
+    .project ul li {
+      margin-bottom: 6px;
+    }
+
+    .project ul li b {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .ownership-tag {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--accent);
+      background: var(--accent-tint);
+      padding: 3px 8px;
+      border-radius: 3px;
       margin-bottom: 10px;
-      color: var(--text-muted);
     }
 
-    .key {
-      color: var(--accent-keyword);
-      font-weight: 500;
+    .subgroup-label {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--ink-soft);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin: 4px 0 16px;
     }
 
-    .val {
-      color: var(--text-main);
+    .project.compact p {
+      margin-bottom: 0;
     }
 
-    /* Technical Matrix Table */
-    .matrix-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 12px;
-    }
-
-    .matrix-table th, .matrix-table td {
-      padding: 10px 12px;
-      border: 1px solid var(--border-color);
-      text-align: left;
-      font-size: 0.95rem;
-    }
-
-    .matrix-table th {
-      background-color: var(--term-nav);
-      color: var(--accent-value);
-    }
-
-    /* Metrics Graphics Layer */
-    .metrics-grid {
+    /* Metrics Visual Overlay Layout */
+    .metrics-container {
       display: flex;
-      flex-wrap: wrap;
+      flex-direction: column;
       gap: 16px;
-      margin-top: 16px;
     }
 
-    .metrics-grid img {
+    .metrics-container img {
       max-width: 100%;
       height: auto;
-      border: 1px solid var(--border-color);
-      border-radius: 6px;
-      background-color: var(--bg-color);
+      border: 1px solid var(--line);
+      border-radius: 4px;
     }
 
-    .metric-half {
-      width: calc(50% - 8px);
+    /* Skills Clusters */
+    .skill-groups {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 24px;
     }
 
-    .metric-full {
-      width: 100%;
+    .skill-groups h4 {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--ink-soft);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin: 0 0 10px;
     }
 
-    /* Utilities & Anchors */
-    a {
-      color: var(--accent-value);
-      text-decoration: none;
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
     }
 
-    a:hover {
-      text-decoration: underline;
-      color: var(--prompt-user);
+    .tag {
+      font-family: var(--mono);
+      font-size: 12px;
+      background: var(--accent-tint);
+      color: var(--accent);
+      padding: 4px 9px;
+      border-radius: 3px;
     }
 
-    footer {
-      margin-top: 60px;
-      border-top: 1px solid var(--border-color);
-      padding-top: 20px;
-      text-align: center;
-      font-size: 0.85rem;
-      color: var(--text-muted);
+    footer.site-footer {
+      padding: 48px 0 60px;
+      display: grid;
+      grid-template-columns: var(--gutter-w) 1fr;
     }
 
-    @media (max-width: 768px) {
-      body { padding: 10px 5px; }
-      .terminal-body { padding: 16px 16px; }
-      .metric-half { width: 100%; }
-      .matrix-table, .matrix-table tbody, .matrix-table tr, .matrix-table td, .matrix-table th {
-        display: block;
-        width: 100%;
-        box-sizing: border-box;
+    footer.site-footer p {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--ink-soft);
+      margin: 0;
+    }
+
+    @media (max-width: 560px) {
+      .section {
+        grid-template-columns: 28px 1fr;
+        padding: 48px 0 8px;
       }
-      .matrix-table tr { margin-bottom: 12px; }
-      .matrix-table th { display: none; }
+
+      footer.site-footer {
+        grid-template-columns: 28px 1fr;
+      }
+
+      .role-item {
+        grid-template-columns: 1fr;
+        gap: 4px;
+      }
+
+      .role-item time {
+        padding-top: 0;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0F1115;
+        --ink: #F3F4F6;
+        --ink-soft: #9CA3AF;
+        --accent: #4DB3A2;
+        --accent-tint: #172C28;
+        --line: #2A2D35;
+        --gutter: #626A7A;
+        --card-bg: #161920;
+      }
     }
   </style>
 </head>
+
 <body>
 
-  <div class="terminal-window">
-    <div class="terminal-header">
-      <div class="window-buttons">
-        <div class="dot dot-close"></div>
-        <div class="dot dot-minimize"></div>
-        <div class="dot dot-maximize"></div>
-      </div>
-      <div class="window-title">kkaif4@backend-core:~ (ssh)</div>
-    </div>
+  <div class="page">
 
-    <div class="terminal-body">
-      
-      <div class="prompt">
-        <div class="prompt-line"><span class="prompt-input">cat identity.json</span></div>
-        <div style="margin-top: 12px; padding-left: 10px;">
-          <h1>Mohammad Kaif Shaikh</h1>
-          <div class="subtitle">Backend Developer || Full Stack Engineer || Node.js Enthusiast</div>
-          <p class="tagline">Building scalable backend systems, APIs, and business applications with a focus on clean architecture and performance.</p>
+    <section class="section hero">
+      <div class="ln">01</div>
+      <div>
+        <p class="prompt">whoami</p>
+        <h1>Mohammad Kaif Shaikh</h1>
+        <p class="role">Backend Developer<span class="divider">/</span>Full-Stack Engineer</p>
+        <p class="bio">
+          Building scalable backend systems, APIs, and business applications with a strong focus on clean architecture and micro-performance paths. I handle modern service deployments from strict structural data modeling down through the execution runtime.
+        </p>
+        <div class="links">
+          <a href="mailto:kkaifshaikh.27@gmail.com">email</a>
+          <a href="https://www.linkedin.com/in/mdkaifshaikh" target="_blank" rel="noopener">linkedin</a>
+          <a href="https://github.com/Kkaif4" target="_blank" rel="noopener">github</a>
+          <span style="color: var(--gutter);">Latur, Maharashtra, India</span>
         </div>
       </div>
+    </section>
 
-      <div class="system-block">
-        <h2>./about_me.sh</h2>
-        <ul class="env-list">
-          <li><span class="key">FOCUS:</span> <span class="val">Backend-oriented Software Developer with production-ready web apps experience.</span></li>
-          <li><span class="key">SPECIALIZATION:</span> <span class="val">Scalable APIs, backend systems, complex system architecture.</span></li>
-          <li><span class="key">INTERESTS:</span> <span class="val">Distributed systems, cloud technologies, database optimization.</span></li>
-          <li><span class="key">APPROACH:</span> <span class="val">Clean code, robust design, collaboration-driven growth.</span></li>
-          <li><span class="key">LOCATION:</span> <span class="val">India</span></li>
-        </ul>
+    <section class="section" id="experience">
+      <div class="ln">02</div>
+      <div>
+        <p class="comment">experience</p>
+        <h2>Functional Core Domains</h2>
+        <div class="timeline">
+
+          <div class="role-item">
+            <time>Enterprise</time>
+            <div>
+              <h3>ERP &amp; Management Infrastructure</h3>
+              <div class="org">Core Core Logic Layers</div>
+              <p>
+                Designed and integrated backend processing environments handling multi-tenant transactional structures, secure identity tracking capabilities, and internal asset logistics workflows cleanly.
+              </p>
+            </div>
+          </div>
+
+          <div class="role-item">
+            <time>Real-time</time>
+            <div>
+              <h3>Data Event Synchronizations</h3>
+              <div class="org">WebSockets &amp; System Automation</div>
+              <p>
+                Deployed robust asynchronous execution channels optimizing background calculation pools and enabling fast state notifications streams directly across client sessions.
+              </p>
+            </div>
+          </div>
+
+        </div>
       </div>
+    </section>
 
-      <div class="system-block">
-        <h2>env | grep -E "SKILLS|STACK"</h2>
-        <table class="matrix-table">
-          <thead>
-            <tr>
-              <th style="width: 25%;">Domain</th>
-              <th>Technologies & Tools</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="key">Backend</td>
-              <td class="val">Node.js, TypeScript, NestJS, Express.js, REST APIs, WebSockets</td>
-            </tr>
-            <tr>
-              <td class="key">Databases & ORMs</td>
-              <td class="val">PostgreSQL, MongoDB, MySQL, Prisma ORM, Redis</td>
-            </tr>
-            <tr>
-              <td class="key">Frontend</td>
-              <td class="val">React.js, Next.js, Angular, HTML5, CSS3, Tailwind CSS</td>
-            </tr>
-            <tr>
-              <td class="key">DevOps & Tools</td>
-              <td class="val">Docker, Git, GitHub, GitHub Actions, Linux, AWS (Basics)</td>
-            </tr>
-            <tr>
-              <td class="key">Security & Arch</td>
-              <td class="val">JWT, Role-Based Access Control (RBAC), System Design</td>
-            </tr>
-          </tbody>
-        </table>
+    <section class="section" id="projects">
+      <div class="ln">03</div>
+      <div>
+        <p class="comment">projects</p>
+        <h2>Selected work</h2>
+
+        <p class="subgroup-label">Architecture, data modeling &amp; implementation</p>
+        <div class="projects">
+
+          <div class="project">
+            <span class="ownership-tag">architecture · database · backend</span>
+            <div class="project-head">
+              <h3>Enterprise Business Management Stack</h3>
+              <span class="stack">NestJS · Node.js · PostgreSQL · Prisma ORM · Redis</span>
+            </div>
+            <p>
+              Engineered the functional relational mapping configurations and high-speed API endpoints servicing dense core management modules.
+            </p>
+            <ul>
+              <li><b>Data Architecture:</b> Structured complex schema definitions optimized for performance scaling on PostgreSQL engines.</li>
+              <li><b>Performance Layer:</b> Configured Redis memory nodes to cache heavy computing tasks, cutting server overhead.</li>
+              <li><b>Security Matrix:</b> Built granular authorization handlers to isolate dynamic privileges securely.</li>
+            </ul>
+          </div>
+
+          <div class="project">
+            <span class="ownership-tag">real-time · infrastructure · api</span>
+            <div class="project-head">
+              <h3>Transaction &amp; Reporting Pipelines</h3>
+              <span class="stack">Express.js · MongoDB · WebSockets · JWT / RBAC</span>
+            </div>
+            <p>
+              Built low-latency streaming paths and validation runtimes tracking transactional histories safely.
+            </p>
+            <ul>
+              <li><b>Concurrency Sync:</b> Handled live messaging instances broadcast through native WebSocket infrastructure protocols.</li>
+              <li><b>State Access:</b> Implemented robust JSON Web Tokens routing verification pipelines coupled with strict role controls.</li>
+            </ul>
+          </div>
+
+        </div>
+
+        <p class="subgroup-label" style="margin-top: 32px;">Also built</p>
+        <div class="projects">
+
+          <div class="project compact">
+            <div class="project-head">
+              <h3>ERP Core Solutions</h3>
+              <span class="stack">NestJS · MongoDB · RBAC</span>
+            </div>
+            <p>
+              Real-time resource allocation and access controls reducing query transaction bottlenecks.
+            </p>
+          </div>
+
+          <div class="project compact">
+            <div class="project-head">
+              <h3>Analytics Monitoring Dashboards</h3>
+              <span class="stack">React.js · Next.js · Tailwind CSS</span>
+            </div>
+            <p>
+              Clean interface visualizations streaming backend server metrics efficiently across clean responsive dashboards.
+            </p>
+          </div>
+
+        </div>
       </div>
+    </section>
 
-      <div class="system-block">
-        <h2>./view_competencies.py</h2>
-        <ul class="env-list">
-          <li><span class="key">[Enterprise Software]</span> <span class="val">ERP, Inventory & Business Management Systems.</span></li>
-          <li><span class="key">[Data & Analytics]</span> <span class="val">Reporting Dashboards, Workflow Automation Processes.</span></li>
-          <li><span class="key">[Infrastructure]</span> <span class="val">REST APIs, Custom Authentication Workflows, WebSockets Integrations.</span></li>
-          <li><span class="key">[Financial Systems]</span> <span class="val">Billing Engines, Invoicing Systems, Transaction Management.</span></li>
-        </ul>
+    <section class="section" id="metrics">
+      <div class="ln">04</div>
+      <div>
+        <p class="comment">telemetry</p>
+        <h2>GitHub System Analytics</h2>
+        <div class="metrics-container">
+          <img src="https://github-readme-stats.vercel.app/api?username=Kkaif4&show_icons=true&theme=github_dark" alt="GitHub Global System Statistics">
+          <img src="https://github-readme-streak-stats.herokuapp.com/?user=Kkaif4&theme=github-dark" alt="GitHub Development Active Streak Tracking">
+          <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Kkaif4&layout=compact&theme=github_dark" alt="Primary Code Stack Profile Allocation">
+        </div>
       </div>
+    </section>
 
-      <div class="system-block">
-        <h2>cat roadmap.md</h2>
-        <div style="margin-bottom: 12px; color: var(--accent-value); font-weight: bold;"># Areas of Interest</div>
-        <ul class="env-list" style="margin-bottom: 20px;">
-          <li>* Backend & API Architecture</li>
-          <li>* Distributed Systems & High-Performance Design</li>
-          <li>* Database Design & Performance Tuning</li>
-          <li>* Cloud Infrastructure</li>
-        </ul>
-        <div style="margin-bottom: 12px; color: var(--accent-value); font-weight: bold;"># Continuous Development Track</div>
-        <ul class="env-list">
-          <li>* Advanced Node.js Internals</li>
-          <li>* Message Brokers (Kafka, RabbitMQ)</li>
-          <li>* Container Orchestration (Kubernetes)</li>
-          <li>* Cloud-Native Architecture</li>
-        </ul>
+    <section class="section" id="skills">
+      <div class="ln">05</div>
+      <div>
+        <p class="comment">skills</p>
+        <h2>Key skills</h2>
+        <div class="skill-groups">
+          <div>
+            <h4>Languages</h4>
+            <div class="tag-row">
+              <span class="tag">JavaScript</span>
+              <span class="tag">TypeScript</span>
+              <span class="tag">Python</span>
+            </div>
+          </div>
+          <div>
+            <h4>Backend</h4>
+            <div class="tag-row">
+              <span class="tag">Node.js</span>
+              <span class="tag">NestJS</span>
+              <span class="tag">Express.js</span>
+              <span class="tag">REST APIs</span>
+              <span class="tag">WebSockets</span>
+            </div>
+          </div>
+          <div>
+            <h4>Data Layers</h4>
+            <div class="tag-row">
+              <span class="tag">PostgreSQL</span>
+              <span class="tag">MongoDB</span>
+              <span class="tag">MySQL</span>
+              <span class="tag">Prisma ORM</span>
+              <span class="tag">Redis</span>
+            </div>
+          </div>
+          <div>
+            <h4>Infrastructure</h4>
+            <div class="tag-row">
+              <span class="tag">Docker</span>
+              <span class="tag">Git</span>
+              <span class="tag">GitHub Actions</span>
+              <span class="tag">Linux</span>
+              <span class="tag">AWS Basics</span>
+            </div>
+          </div>
+        </div>
       </div>
+    </section>
 
-      <div class="system-block">
-        <h2>netstat -an | grep LISTEN</h2>
-        <ul class="env-list">
-          <li><span class="key">PORT 443 [WAN]:</span> <span class="val">Portfolio -> <a href="https://kkaif4.github.io">https://kkaif4.github.io</a></span></li>
-          <li><span class="key">PORT 8080 [TCP]:</span> <span class="val">LinkedIn  -> <a href="https://www.linkedin.com/in/mdkaifshaikh" target="_blank" rel="noopener">linkedin.com/in/mdkaifshaikh</a></span></li>
-          <li><span class="key">PORT 25 [SMTP]:</span> <span class="val">Email     -> <a href="mailto:kkaifshaikh.27@gmail.com">kkaifshaikh.27@gmail.com</a></span></li>
-        </ul>
+    <section class="section" id="roadmap">
+      <div class="ln">06</div>
+      <div>
+        <p class="comment">roadmap</p>
+        <h2>Continuous Architecture Tracks</h2>
+        <div class="timeline">
+
+          <div class="role-item">
+            <time>Active Track</time>
+            <div>
+              <h3>Runtime Performance &amp; Buffering</h3>
+              <p>
+                Deep-diving into Node.js internals, performance profiling execution parameters, and highly available async streaming architectures utilizing message queues like Kafka or RabbitMQ.
+              </p>
+            </div>
+          </div>
+
+          <div class="role-item">
+            <time>Infrastructure</time>
+            <div>
+              <h3>High-Availability Orchestration</h3>
+              <p>
+                Exploring cloud-native systems deployments, cluster environments setup, and scalable distributed patterns backed by Kubernetes structures.
+              </p>
+            </div>
+          </div>
+
+        </div>
       </div>
+    </section>
 
-      <footer>
-        <p>"Clean code, scalable systems, and continuous learning."</p>
-        <p>© 2026 Mohammad Kaif Shaikh // Run Level 5</p>
-      </footer>
+    <footer class="site-footer">
+      <div class="ln">07</div>
+      <p>© <span id="year"></span> Mohammad Kaif Shaikh — built with plain HTML &amp; CSS</p>
+    </footer>
 
-    </div>
   </div>
 
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+
 </body>
+
 </html>
