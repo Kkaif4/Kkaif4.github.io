@@ -72,7 +72,7 @@ Building scalable backend systems, APIs, and business applications with a focus 
 
 * **Portfolio:** [kkaif4.github.io](https://kkaif4.github.io)
 * **LinkedIn:** [linkedin.com/in/mdkaifshaikh](https://www.linkedin.com/in/mdkaifshaikh)
-* **Email:** [your.email@example.com](mailto:kkaifshaikh.27@gmail.com)
+* **Email:** [kkaifshaikh.27@gmail.com](mailto:kkaifshaikh.27@gmail.com)
 
 ---
 
